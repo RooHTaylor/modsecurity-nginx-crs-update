@@ -20,7 +20,7 @@ albiet with some aditional manual configuration.
 ```bash
 git clone https://github.com/RooHTaylor/modsecurity-nginx-crs-update.git
 cd ./modsecurity-nginx-crs-update
-sudo ./install./sh
+sudo ./install.sh
 ```
 
 #### To Uninstall
