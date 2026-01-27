@@ -60,6 +60,6 @@ cat <<EOF > /var/lib/dpkg/info/modsecurity-nginx.postinst
 EOF
 chmod +x /var/lib/dpkg/info/modsecurity-nginx.postinst
 
-ln -s "${PWD}/update-modsecurity-nginx.sh" /usr/local/bin/.
+cp update-modsecurity-nginx.sh /usr/local/bin/.
 
 echo "Installation complete"
