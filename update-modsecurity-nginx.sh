@@ -246,7 +246,7 @@ update_coreruleset() {
 update_crs_plugin() {
     local plugin_name="$1"
     local plugin_repo="$2"
-    local plugin_dir="${plugin_dir%.git}"
+    local plugin_dir="${plugin_repo%.git}"
     plugin_dir="${plugin_dir##*/}"
     log "info" "Starting CoreRuleset $plugin_name plugin update!"
 
