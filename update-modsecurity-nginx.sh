@@ -105,8 +105,9 @@ update_modsecurity() {
     log "debug" "installing"
     make install > /dev/null || { log "error" "Failed to install!"; return 1; }
 
+    mkdir -p /etc/nginx/modsecurity.d
     cp -f ./unicode.mapping /etc/nginx/modsecurity.d/unicode.mapping
-    cp -f ./modsecurity.conf-recommended /etc/nginx/modsecurity.d/modsecurity.conf.new
+    cp -f ./modsecurity.conf-recommended /etc/nginx/modsecurity.d/modsecurity.conf
 
     cd "$previous_dir"
 
@@ -230,11 +231,11 @@ update_coreruleset() {
     git reset --hard "$latest_tag" > /dev/null \
         || { log "error" "git reset --hard \"${latest_tag}\" failed!"; return 1; }
 
-    cp -f crs-setup.conf.example ../crs-setup.conf.new
+    cp -f crs-setup.conf.example ../crs-setup.conf
     [[ -d "$CRS_PLUGIN_DIR" ]] || mkdir -p "$CRS_PLUGIN_DIR" \
         || { log "error" "Failed to make plugin directory!"; return 1; }
 
-    log "info" "New CRS configuration available at $CRS_DIR/crs-setup.conf.new"
+    log "info" "New CRS configuration available at $CRS_DIR/crs-setup.conf"
 
     cd "$previous_dir"
 
