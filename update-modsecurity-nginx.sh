@@ -312,8 +312,8 @@ main() {
     #update_crs_plugin "Nextcloud" "https://github.com/coreruleset/nextcloud-rule-exclusions-plugin.git" || exit 1
     #update_crs_plugin "PHPMyAdmin" "https://github.com/coreruleset/phpmyadmin-rule-exclusions-plugin.git" || exit 1
 
-    log "info" "Restarting nginx"
-    systemctl restart nginx
+    log "info" "Reloading nginx"
+    systemctl reload nginx
 }
 
 main
