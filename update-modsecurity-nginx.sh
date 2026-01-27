@@ -27,23 +27,23 @@ log() {
     echo "[$(date)] $level: $2"
 }
 
-detect_cores() {
-    local cores
+detect_threads() {
 
-    # Find out how many cores we have to work with, so we can multi-thread the compilation
-    cores=$(grep -c ^processor /proc/cpuinfo)
-    if [[ -z "$cores" ]]; then
-        cores=1
+    # Find out how many threads we have to work with, so we can multi-thread the 
+    # compilation
+    local threads=$(grep -c ^processor /proc/cpuinfo)
+    if [[ -z "$threads" ]]; then
+        threads=1
     fi
-    cores=$(( cores > 1 ? cores - 1 : cores ))
+    threads=$(( threads > 1 ? threads - 1 : threads ))
 
-    echo "$cores"
+    echo "$threads"
 
     return 0
 }
 
 update_modsecurity() {
-    local cores="${1:-1}"
+    local threads="${1:-1}"
 
     log "info" "Starting ModSecurity update!"
 
@@ -100,8 +100,8 @@ update_modsecurity() {
     ./configure --with-pcre2 --with-lmdb > /dev/null \
         || { log "error" "./configure --with-pcre2 --with-lmdb failed to run!"; return 1; }
 
-    log "debug" "making with $cores core(s)"
-    make -j "$cores" > /dev/null || { log "error" "Failed to compile!"; return 1; }
+    log "debug" "making with $threads thread(s)"
+    make -j "$threads" > /dev/null || { log "error" "Failed to compile!"; return 1; }
     log "debug" "installing"
     make install > /dev/null || { log "error" "Failed to install!"; return 1; }
 
@@ -298,9 +298,9 @@ update_crs_plugin() {
 main() {
     log "info" "Rebuilding libmodsecurity and ModSecurity-nginx module, and CoreRuleset rules and plugins"
 
-    local cores=$(detect_cores)
+    local threads=$(detect_threads)
 
-    update_modsecurity "$cores" || exit 1
+    update_modsecurity "$threads" || exit 1
     update_modsecurity_nginx_connector || exit 1
 
     update_coreruleset || exit 1
