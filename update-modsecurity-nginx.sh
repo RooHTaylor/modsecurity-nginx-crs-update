@@ -86,12 +86,15 @@ update_modsecurity() {
         || { log "error" "git reset --hard \"${latest_tag}\" failed!"; return 1; }
     
     # Install dependancies
+    local old_dbf="$DEBIAN_FRONTEND"
+    export DEBIAN_FRONTEND=noninteractive
     apt-get update > /dev/null\
         || { log "error" "Failed to update apt repo cache"; return 1; }
     apt-get install -y autoconf automake build-essential git libcurl4-gnutls-dev \
         libgeoip-dev liblmdb-dev libpcre2-dev libtool libxml2-dev libyajl-dev \
         pkgconf zlib1g-dev > /dev/null \
         || { log "error" "Failed to update ModSecurity dependancies"; return 1; }
+    export DEBIAN_FRONTEND="$old_dbf"
 
     # Start the build process with build.sh and ./configure
     log "debug" "Running build.sh"
