@@ -89,8 +89,8 @@ update_modsecurity() {
     apt-get update > /dev/null\
         || { log "error" "Failed to update apt repo cache"; return 1; }
     apt-get install -y autoconf automake build-essential git libcurl4-gnutls-dev \
-        libgeoip-dev liblmdb-dev libpcre++-dev libpcre2-dev libtool libxml2-dev \
-        libyajl-dev pkgconf zlib1g-dev > /dev/null \
+        libgeoip-dev liblmdb-dev libpcre2-dev libtool libxml2-dev libyajl-dev \
+        pkgconf zlib1g-dev > /dev/null \
         || { log "error" "Failed to update ModSecurity dependancies"; return 1; }
 
     # Start the build process with build.sh and ./configure
