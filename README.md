@@ -16,35 +16,16 @@ to use this script for an inital installation, though technically is will work -
 albiet with some aditional manual configuration.
 
 # Usage
-### For DPKG hook execution
-```bash
-sudo vim /var/lib/dpkg/info/modsecurity-nginx.triggers
-```
-
-```
-interest nginx
-```
-
-```bash
-sudo vim /var/lib/dpkg/info/modsecurity-nginx.postinst
-```
-
-```bash
-#!/usr/bin/env bash
-
-/usr/local/bin/update-modsecurity-nginx.sh || true
-```
-
-```bash
-sudo chmod +x /var/lib/dpkg/info/modsecurity-nginx.postinst
-```
-
-### Clone the project
 
 ```bash
 git clone https://github.com/RooHTaylor/modsecurity-nginx-crs-update.git
 cd ./modsecurity-nginx-crs-update
-sudo cp ./update-modsecurity-nginx.sh /usr/local/bin/.
+sudo ./install./sh
+```
+
+#### To Uninstall
+```bash
+sudo ./install.sh -U
 ```
 
 The script will update libmodsecurity from sources, and build the modsecurity-nginx
