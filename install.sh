@@ -40,8 +40,9 @@ fi
 if [[ $UNINSTALL -eq 1 ]]; then
     echo "Uninstalling"
 
-    rm -f "/usr/local/bin/update-modsecurity-nginx.sh"
-    rm -f "/var/lib/dpkg/info/modsecurity-nginx.{triggers,postinst}"
+    rm -f "/usr/local/bin/update-modsecurity-nginx"
+    rm -f "/usr/local/bin/update-modsecurity-nginx-wrapper"
+    rm -f "/etc/apt/apt.conf.d/99nginx-hook"
 
     echo "Uninstall complete"
     exit 0
@@ -49,17 +50,11 @@ fi
 
 echo "Installing"
 
-cat <<EOF > /var/lib/dpkg/info/modsecurity-nginx.triggers
-interest nginx
+cat <<EOF > /etc/apt/apt.conf.d/99nginx-hook
+DPkg::Post-Invoke {"/usr/local/bin/update-modsecurity-nginx-wrapper";};
 EOF
 
-cat <<EOF > /var/lib/dpkg/info/modsecurity-nginx.postinst
-#!/usr/bin/env bash
-
-/usr/local/bin/update-modsecurity-nginx.sh || true
-EOF
-chmod +x /var/lib/dpkg/info/modsecurity-nginx.postinst
-
-cp update-modsecurity-nginx.sh /usr/local/bin/.
+cp update-modsecurity-nginx /usr/local/bin/.
+cp update-modsecurity-nginx-wrapper /usr/local/bin/.
 
 echo "Installation complete"

@@ -1,6 +1,6 @@
 # modsecurity-nginx-crs-update
 A simple libmodsecurity, ModSecurity-nginx connector, and CoreRuleset updater.
-Intended to run via a dpkg hook, but can be used stand-alone as well.
+Intended to run via an apt hook, but can be used stand-alone as well.
 
 # Requirements
 

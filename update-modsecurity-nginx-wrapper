@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+while read -ra pack
+do
+    package_name="${pack[0]}"
+    # The exact format of input (version, action etc.) depends on the Version specified in the apt config.
+    # This is a simplified check for the package name.
+    if [ "$package_name" = "nginx" ]; then
+        echo "NGINX package detected. Recompiling ModSecurity and ModSecurity-nginx connector..."
+        
+        /usr/local/bin/update-modsecurity
+    fi
+done
