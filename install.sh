@@ -41,8 +41,6 @@ if [[ $UNINSTALL -eq 1 ]]; then
     echo "Uninstalling"
 
     rm -f "/usr/local/bin/update-modsecurity-nginx"
-    rm -f "/usr/local/bin/update-modsecurity-nginx-wrapper"
-    rm -f "/etc/apt/apt.conf.d/99nginx-hook"
 
     echo "Uninstall complete"
     exit 0
@@ -50,11 +48,6 @@ fi
 
 echo "Installing"
 
-cat <<EOF > /etc/apt/apt.conf.d/99nginx-hook
-DPkg::Post-Invoke {"/usr/local/bin/update-modsecurity-nginx-wrapper";};
-EOF
-
 cp update-modsecurity-nginx /usr/local/bin/.
-cp update-modsecurity-nginx-wrapper /usr/local/bin/.
 
 echo "Installation complete"
